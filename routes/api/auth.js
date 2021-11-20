@@ -121,11 +121,11 @@ router.post("/teener", (req, res) => {
   Url.findOne({ email: email })
     .then(data => {
       if (data) {
-        if (data.listofUrls.fullurl === fullurl) {
+        if (fullurl in data.listofUrls.fullurl) {
           return res.status(400).json({ error: "Url already exists" });
         }
         else {
-          Url.updateOne({ email: email },
+          Url.findOneAndUpdate({ email: email },
             {
               $push: {
                 listofUrls: {
